@@ -6,20 +6,33 @@
           <router-link to="/">Stock Trader</router-link>
         </div>
         <ul>
-          <router-link to="/portfolio" active-class="active" tag="li"
+          <router-link to="/portfolio" active-class="active-page" tag="li"
             ><a>Portfolio</a></router-link
           >
-          <router-link to="/stocks" active-class="active" tag="li"
+          <router-link to="/stocks" active-class="active-page" tag="li"
             ><a>Stocks</a></router-link
           >
         </ul>
       </div>
-      <div class="navbar__actions">
+      <div class="navbar__actions flex-align-center">
+        <div class="">
+          <span>Funds: <strong>{{ funds }}</strong></span>
+        </div>
         <a href="#">End Day</a>
       </div>
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  computed: {
+    funds() {
+      return this.$store.getters.funds;
+    }
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .navbar {
@@ -32,11 +45,6 @@
     padding: 20px;
     align-items: center;
     height: 100%;
-
-    &:hover,
-    &:active {
-      background-color: $navbar-bgc-2;
-    }
   }
 
   &__home {
@@ -49,8 +57,18 @@
     ul {
       display: flex;
       height: 100%;
+      
+      li:hover,
+      li.active-page {
+        background-color: $navbar-bgc-2;
+      }
     }
   }
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
 }
 
 .container {
