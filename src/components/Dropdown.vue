@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown" @blur="close">
     <span
-      @click="open"
+      @click="toggle"
       class="dropdown__text">{{ text }}</span>
     <ul v-if="opened" class="dropdown__list">
       <li
@@ -62,10 +62,14 @@ export default {
       top: 100%;
       box-shadow: $navbar-shadow;
       background-color: $navbar-bgc;
-      padding: 10px 5px;
 
       &-item {
-        padding: 10px;
+        text-align: center;
+        padding: 10px 5px;
+
+        &:hover {
+          background-color: lighten($navbar-bgc, 20);
+        }
       }
     }
   }

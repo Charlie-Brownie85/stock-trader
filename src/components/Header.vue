@@ -32,6 +32,7 @@
 <script>
 import { mapActions } from 'vuex';
 import Dropdown from './Dropdown';
+import axios from 'axios';
 
 export default {
   components: {
@@ -44,10 +45,30 @@ export default {
   },
   methods: {
     ...mapActions({
-      endDay: 'randomizeStocks'
+      endDay: 'randomizeStocks',
+      fetchData: 'loadData',
     }),
     onDropdownClick(item) {
-      console.log('clicked: ', item)
+      if (item.id === 'save') {
+        this.saveData();
+      } else if(item.id === 'load') {
+        this.loadData();
+      }
+    },
+    saveData() {
+      const data = {
+        funds: this.$store.getters.funds,
+        stockPortfolio: this.$store.getters.stockPortfolio,
+        stocks: this.$store.getters.stocks
+      };
+      axios.put(`${process.env.VUE_APP_ENDPOINT_URL}data.json`, data)
+        .then(
+          response => { console.log(response) },
+          error => { console.log(error) }
+        );
+    },
+    loadData() {
+      this.fetchData();
     }
   }
 }
