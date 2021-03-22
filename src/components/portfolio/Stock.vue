@@ -20,8 +20,9 @@
           <button
             class="stock-sell"
             @click="sellStock"
-            :disabled="quantity <= 0 || !Number.isInteger(quantity)"
-          >Sell</button>
+            :class="{ 'stock-sell--not-enough-stocks': notEnoughStocks }"
+            :disabled="quantity <= 0 || !Number.isInteger(quantity) || notEnoughStocks"
+          >{{ notEnoughStocks ? 'Not enough' : 'Sell' }}</button>
         </div>
       </div>
     </div>
@@ -36,6 +37,11 @@ export default {
   data() {
     return {
       quantity: 0
+    }
+  },
+  computed: {
+    notEnoughStocks() {
+      return this.quantity > this.stock.quantity;
     }
   },
   methods: {
@@ -124,7 +130,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 70px;
+      min-width: 70px;
       height: 40px;
       color: #fff;
       background-color: $stock-color-6;
@@ -134,6 +140,12 @@ export default {
       outline: none;
       box-shadow: none;
       cursor: pointer;
+
+      &--not-enough-stocks {
+        font-size: 12px;
+        background-color: #be3131;
+        border-color: #740202;
+      }
 
       &:disabled {
         opacity: 0.6;

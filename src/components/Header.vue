@@ -15,22 +15,41 @@
         </ul>
       </div>
       <div class="navbar__actions flex-align-center">
-        <div class="">
-          <span>Funds: <strong>{{ funds }}</strong></span>
+        <a href="#" @click="endDay">End Day</a>
+        <dropdown
+          text="Save & Load"
+          :items="[{id: 'load', text: 'Load Data'}, {id: 'save', text: 'Save Data'}]"
+          @dropdown-item-clicked="onDropdownClick"
+        ></dropdown>
+        <div>
+          <span>Funds: <strong>{{ funds | currency }}</strong></span>
         </div>
-        <a href="#">End Day</a>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import Dropdown from './Dropdown';
+
 export default {
+  components: {
+    Dropdown,
+  },
   computed: {
     funds() {
       return this.$store.getters.funds;
     }
   },
+  methods: {
+    ...mapActions({
+      endDay: 'randomizeStocks'
+    }),
+    onDropdownClick(item) {
+      console.log('clicked: ', item)
+    }
+  }
 }
 </script>
 

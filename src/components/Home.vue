@@ -5,7 +5,7 @@
     <h6>Click on 'End Day' to begin a New Day!</h6>
     <hr />
     <br>
-    <p>Your funds: {{ funds }}</p>
+    <p>Your funds: {{ funds | currency }}</p>
   </div>
 </template>
 

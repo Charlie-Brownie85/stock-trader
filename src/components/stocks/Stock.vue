@@ -21,7 +21,8 @@
             class="stock-buy"
             @click="buyStock"
             :disabled="quantity <= 0 || !Number.isInteger(quantity) || !enoughFunds"
-          >Buy</button>
+            :class="{ 'stock-buy--not-enough-funds': !enoughFunds }"
+          >{{ !enoughFunds? 'Not enough funds' : 'Buy' }}</button>
         </div>
       </div>
     </div>
@@ -137,7 +138,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 70px;
+      min-width: 70px;
       height: 40px;
       color: #fff;
       background-color: $stock-color-3;
@@ -147,6 +148,12 @@ export default {
       outline: none;
       box-shadow: none;
       cursor: pointer;
+
+      &--not-enough-funds {
+        font-size: 12px;
+        background-color: #be3131;
+        border-color: #740202;
+      }
 
       &:disabled {
         opacity: 0.6;
